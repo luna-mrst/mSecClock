@@ -1,0 +1,18 @@
+{
+  "name": "mSecClock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css_comp": "cleancss -o dist/style.min.css src/style.css",
+    "js_comp": "uglifyjs src/mSecClock.js -c -o dist/bookmarklet.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-css-cli": "^4.2.1",
+    "uglify-es": "^3.3.9"
+  }
+}

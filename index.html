@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>mSecClock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    fetch('/dist/bookmarklet.js')
+      .then(res => res.text())
+      .then(src => {
+        const a = document.createElement('a');
+        a.href = 'javascript:' + src;
+        a.innerText = '時計';
+        document.body.appendChild(a);
+      });
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>
