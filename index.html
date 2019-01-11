@@ -6,7 +6,7 @@
   <title>mSecClock</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
-    fetch('/dist/bookmarklet.js')
+    fetch(location.href + '/dist/bookmarklet.js')
       .then(res => res.text())
       .then(src => {
         const a = document.createElement('a');
