@@ -1,4 +1,4 @@
-(() => {
+(([d, m, u]) => {
   const old = document.getElementById('mSecClock');
   if (old != null) {
     // 既に時計を生成していた場合は削除して終了
@@ -42,32 +42,27 @@
   // 参考サイト https://q-az.net/elements-drag-and-drop/
   const point = { x: 0, y: 0 };
 
-  const mdown = e => {
+  const mdown = ev => {
+    const e = ev instanceof TouchEvent ? ev.changedTouches[0] : ev;
     if (e.target === reload) {
       return;
     }
     point.x = e.pageX - con.offsetLeft;
     point.y = e.pageY - con.offsetTop;
 
-    document.body.addEventListener('mousemove', mmove, false);
+    document.body.addEventListener(m, mmove, { passive: false });
+    con.addEventListener(u, e => document.body.removeEventListener(m, mmove, false));
   };
 
-  const mmove = e => {
-    e.preventDefault();
+  const mmove = ev => {
+    const e = ev instanceof TouchEvent ? ev.changedTouches[0] : ev;
+    ev.preventDefault();
 
     con.style.top = e.pageY - point.y + 'px';
     con.style.left = e.pageX - point.x + 'px';
-
-    con.addEventListener(
-      'mouseup',
-      e => {
-        document.body.removeEventListener('mousemove', mmove, false);
-      },
-      false
-    );
   };
 
-  con.addEventListener('mousedown', mdown, false);
+  con.addEventListener(d, mdown, false);
 
 
 
@@ -86,7 +81,7 @@
    * 参考サイト https://qiita.com/sounisi5011/items/31972ed6cc8c1551291e
    */
   const refleshDiff = () => {
-    if(apiList.length === 0) return colChange('pink');
+    if (apiList.length === 0) return colChange('pink');
     fetch(apiList[0] + (Date.now() / 1000), {
       mode: 'cors'
     })
@@ -127,4 +122,4 @@
     span.innerText = getTime();
   }, 100);
   refleshDiff();
-})();
+})(window.ontouchstart !== undefined ? ['touchstart', 'touchmove', 'touchend'] : ['mousedown', 'mousemove', 'mouseup']);
